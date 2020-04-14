@@ -1,0 +1,69 @@
+/* mostrar bancos */
+show dbs
+
+/* creando ou acessando banco */
+// esse comando tanto cria o banco quanto acessa ele
+use <Nome do banco>
+
+/* Comando para criar uma Collection importante saber que um banco so aparece
+ na lista depois de uma collection ser criada dentro dele */
+ db.createCollection(<Nome da collection>)
+
+/* Comando para buscar as collections */
+ db.getCollectionNames()
+
+
+/* Comando para deletar um collection */
+db.<Nome da collection>.drop()
+
+/* Comando para inserir dados na collection */
+db.<Nome da collection>.save({ nome: 'José', idade: 30, sexo: 'M', cpf: '123.123.123-12', rg: '123.123.123-1', matricula: 'abcd123'})
+db.<Nome da collection>.save({ nome: 'Maria', idade: 25, sexo: 'F', matricula: 'uio123'})
+db.<Nome da collection>.save({ nome: 'Fernanda', idade: 32, sexo: 'F', matricula: 'hjk456', cursos_interesse: [{curso: 'Curso Completo do Desenvolvedor NodeJS'}, {curso: 'Curso Completo de Desenvolvimento WEB - Crie 6 projetos'}] })
+
+/* Comando para mostrar o primeiro registro */
+db.<Nome da collection>.findOne()
+
+/* Comando para mostrar todos os registros */
+db.<Nome da collection>.find()
+
+/* Utilize o operador .pretty() para concatedar as informações do registro (Melhor leitura dos dados)*/
+db.<Nome da collection>.find().pretty()
+
+/*Operador de igualdade $qe*/
+db.<Nome da collection>.find({nome:{$eq:"José"}}).pretty()
+
+/*Operador menor que $lt*/
+db.<Nome da collection>.find({idade:{$lt:30}}).pretty()
+
+/*Operador menor igual que $lte*/
+db.<Nome da collection>.find({idade:{$lte:30}}).pretty()
+
+/*Operador maior que $gt*/
+db.<Nome da collection>.find({idade:{$gt:30}}).pretty()
+
+/*Operador maior igual que $gte*/
+db.<Nome da collection>.find({idade:{$gte:30}}).pretty()
+
+/*Operador diferende de $ne */
+db.<Nome da collection>.find({sexo:{$ne:"M"}}).pretty()
+
+/*Utilizando o && basta passar mais de um parametro de comparação separado por "," */
+db.<Nome da collection>.find({sexo:{$eq: 'F'}},{idade:{$gt:30}}).pretty()
+
+/*Utilizando o || basta passar colocar os parametro  entre "[]" e separado os operadores de comparação por "," */
+db.alunos.find({$or:[{nome: {$eq:'Maria'}}, {nome: {$eq: 'José'}}]}).pretty()
+
+/* Utilizando o update*/
+db.alunos.update({ nome: 'José'}, {$set:{ nome: 'João'}})
+
+/* Utilizando o update com o multi <- importante lembrar que passando o multi
+ como true ele altera dodos os collections retornados */
+db.alunos.update({ sexo: 'F'}, {$set:{ sexo: 'Feminino'}}. {multi: true})
+
+/*Utilizando o remove()*/
+db.alunos.remove({nome: 'Maria'})
+
+/* Utilizando o remove com o multi <- importante lembrar que passando o multi
+ como true ele remove dodos os collections retornados */
+db.alunos.remove({nome: 'Maria'}, {multi: true})
